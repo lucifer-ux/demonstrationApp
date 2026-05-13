@@ -6,8 +6,10 @@ This project is now set up as a static Vercel app with small serverless API func
 
 - Framework preset: Other
 - Build command: leave empty
-- Output directory: `public`
+- Output directory: leave empty
 - Install command: leave empty unless Vercel asks to install project tooling
+
+Make sure Vercel's root directory is the repository/project root that contains `vercel.json`, `api/`, and `public/`. If the root directory is set to `demonstration/`, Vercel will miss the deployment config and the clean routes can return 404.
 
 ## Environment variables
 

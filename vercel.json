@@ -1,6 +1,11 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "functions": {
+    "api/extract-pan.js": {
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
     { "source": "/api/demonstration/validate-otp", "destination": "/api/validate-otp" },
     { "source": "/api/demonstration/resend-otp", "destination": "/api/resend-otp" },
@@ -8,8 +13,9 @@
     { "source": "/api/demonstration/health", "destination": "/api/health" },
     { "source": "/api/demonstration/public/images/:path*", "destination": "/images/:path*" },
 
-    { "source": "/", "destination": "/otp_screen.html" },
+    { "source": "/", "destination": "/index.html" },
     { "source": "/otp", "destination": "/otp_screen.html" },
+    { "source": "/otp/", "destination": "/otp_screen.html" },
     { "source": "/payment-success", "destination": "/payment_success.html" },
     { "source": "/otp-verifying", "destination": "/otp_verifying.html" },
     { "source": "/otp-success", "destination": "/otp_success_transition.html" },
@@ -33,7 +39,9 @@
     { "source": "/loan-agreement", "destination": "/loan_agreement.html" },
     { "source": "/finalising-emi", "destination": "/finalising_emi.html" },
     { "source": "/all-set", "destination": "/all_set.html" },
+    { "source": "/pages/:page", "destination": "/:page.html" },
 
+    { "source": "/api/demonstration/", "destination": "/index.html" },
     { "source": "/api/demonstration/otp", "destination": "/otp_screen.html" },
     { "source": "/api/demonstration/payment-success", "destination": "/payment_success.html" },
     { "source": "/api/demonstration/otp-verifying", "destination": "/otp_verifying.html" },
@@ -58,7 +66,8 @@
     { "source": "/api/demonstration/loan-agreement", "destination": "/loan_agreement.html" },
     { "source": "/api/demonstration/finalising-emi", "destination": "/finalising_emi.html" },
     { "source": "/api/demonstration/all-set", "destination": "/all_set.html" },
-    { "source": "/api/demonstration", "destination": "/otp_screen.html" }
+    { "source": "/api/demonstration/pages/:page", "destination": "/:page.html" },
+    { "source": "/api/demonstration", "destination": "/index.html" }
   ],
   "headers": [
     {

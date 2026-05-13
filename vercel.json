@@ -1,0 +1,71 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/demonstration/validate-otp", "destination": "/api/validate-otp" },
+    { "source": "/api/demonstration/resend-otp", "destination": "/api/resend-otp" },
+    { "source": "/api/demonstration/extract-pan", "destination": "/api/extract-pan" },
+    { "source": "/api/demonstration/health", "destination": "/api/health" },
+    { "source": "/api/demonstration/public/images/:path*", "destination": "/images/:path*" },
+
+    { "source": "/", "destination": "/otp_screen.html" },
+    { "source": "/otp", "destination": "/otp_screen.html" },
+    { "source": "/payment-success", "destination": "/payment_success.html" },
+    { "source": "/otp-verifying", "destination": "/otp_verifying.html" },
+    { "source": "/otp-success", "destination": "/otp_success_transition.html" },
+    { "source": "/eligibility-check", "destination": "/eligibility_check.html" },
+    { "source": "/details-verifying", "destination": "/details_verifying.html" },
+    { "source": "/about-you", "destination": "/about_you.html" },
+    { "source": "/camera-verification", "destination": "/camera_verification.html" },
+    { "source": "/offer", "destination": "/offer_screen.html" },
+    { "source": "/fetching-lenders", "destination": "/fetching_lenders.html" },
+    { "source": "/offer-list", "destination": "/offer_list.html" },
+    { "source": "/processing-application", "destination": "/processing_application.html" },
+    { "source": "/approval-success", "destination": "/approval_success.html" },
+    { "source": "/loading-best-plans", "destination": "/loading_best_plans.html" },
+    { "source": "/choose-plan", "destination": "/choose_plan.html" },
+    { "source": "/plan-summary", "destination": "/plan_summary.html" },
+    { "source": "/initiating-mandate", "destination": "/initiating_mandate.html" },
+    { "source": "/mandate-setup", "destination": "/mandate_setup.html" },
+    { "source": "/setting-up-mandate", "destination": "/setting_up_mandate.html" },
+    { "source": "/mandate-complete", "destination": "/mandate_complete.html" },
+    { "source": "/preparing-agreement", "destination": "/preparing_agreement.html" },
+    { "source": "/loan-agreement", "destination": "/loan_agreement.html" },
+    { "source": "/finalising-emi", "destination": "/finalising_emi.html" },
+    { "source": "/all-set", "destination": "/all_set.html" },
+
+    { "source": "/api/demonstration/otp", "destination": "/otp_screen.html" },
+    { "source": "/api/demonstration/payment-success", "destination": "/payment_success.html" },
+    { "source": "/api/demonstration/otp-verifying", "destination": "/otp_verifying.html" },
+    { "source": "/api/demonstration/otp-success", "destination": "/otp_success_transition.html" },
+    { "source": "/api/demonstration/eligibility-check", "destination": "/eligibility_check.html" },
+    { "source": "/api/demonstration/details-verifying", "destination": "/details_verifying.html" },
+    { "source": "/api/demonstration/about-you", "destination": "/about_you.html" },
+    { "source": "/api/demonstration/camera-verification", "destination": "/camera_verification.html" },
+    { "source": "/api/demonstration/offer", "destination": "/offer_screen.html" },
+    { "source": "/api/demonstration/fetching-lenders", "destination": "/fetching_lenders.html" },
+    { "source": "/api/demonstration/offer-list", "destination": "/offer_list.html" },
+    { "source": "/api/demonstration/processing-application", "destination": "/processing_application.html" },
+    { "source": "/api/demonstration/approval-success", "destination": "/approval_success.html" },
+    { "source": "/api/demonstration/loading-best-plans", "destination": "/loading_best_plans.html" },
+    { "source": "/api/demonstration/choose-plan", "destination": "/choose_plan.html" },
+    { "source": "/api/demonstration/plan-summary", "destination": "/plan_summary.html" },
+    { "source": "/api/demonstration/initiating-mandate", "destination": "/initiating_mandate.html" },
+    { "source": "/api/demonstration/mandate-setup", "destination": "/mandate_setup.html" },
+    { "source": "/api/demonstration/setting-up-mandate", "destination": "/setting_up_mandate.html" },
+    { "source": "/api/demonstration/mandate-complete", "destination": "/mandate_complete.html" },
+    { "source": "/api/demonstration/preparing-agreement", "destination": "/preparing_agreement.html" },
+    { "source": "/api/demonstration/loan-agreement", "destination": "/loan_agreement.html" },
+    { "source": "/api/demonstration/finalising-emi", "destination": "/finalising_emi.html" },
+    { "source": "/api/demonstration/all-set", "destination": "/all_set.html" },
+    { "source": "/api/demonstration", "destination": "/otp_screen.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
+    }
+  ]
+}

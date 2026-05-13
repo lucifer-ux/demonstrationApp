@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apple Finance - Enter OTP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #E9EBF0;
+            color: #1D1D1F;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .mobile-screen {
+            width: 402px;
+            height: 800px;
+            background-color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+        }
+
+        /* Header Section */
+        .header {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 0.5px solid transparent;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-button {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-arrow {
+            width: 12px;
+            height: 12px;
+            border-left: 2px solid #1D1D1F;
+            border-bottom: 2px solid #1D1D1F;
+            transform: rotate(45deg);
+        }
+
+        .header-title-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 590;
+            letter-spacing: -0.31px;
+            line-height: 21px;
+        }
+
+        .cart-total {
+            font-size: 13px;
+            color: #86868B;
+            line-height: 18px;
+            letter-spacing: -0.08px;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .items-count {
+            font-size: 13px;
+            color: #1D1D1F;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.26px;
+            margin-bottom: 12px;
+            line-height: 28px;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #6E6E73;
+            line-height: 20px;
+            margin-bottom: 32px;
+            letter-spacing: -0.23px;
+        }
+
+        /* OTP Input */
+        .input-container {
+            margin-bottom: 16px;
+        }
+
+        .otp-input {
+            width: 100%;
+            height: 56px;
+            border: 1px solid #C5C5C7;
+            border-radius: 12px;
+            padding: 0 16px;
+            font-size: 17px;
+            font-weight: 400;
+            letter-spacing: 0.025em;
+            color: #1D1D1F;
+            background-color: #FFFFFF;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .otp-input::placeholder {
+            color: #C5C5C7;
+        }
+
+        .otp-input:focus {
+            border-color: #007AFF;
+        }
+
+        .otp-input.error {
+            border-color: #FF3B30;
+        }
+
+        .error-message {
+            font-size: 13px;
+            color: #FF3B30;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Resend Section */
+        .resend-section {
+            display: flex;
+            gap: 6px;
+            font-size: 15px;
+            margin-bottom: auto;
+        }
+
+        .resend-label {
+            color: #6E6E73;
+        }
+
+        .resend-link {
+            color: #007AFF;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .resend-link:hover {
+            text-decoration: underline;
+        }
+
+        .resend-link.disabled {
+            color: #C5C5C7;
+            pointer-events: none;
+        }
+
+        /* Timer */
+        .timer {
+            font-size: 15px;
+            color: #6E6E73;
+            margin-left: 4px;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            margin-top: 40px;
+        }
+
+        .terms-text {
+            font-size: 13px;
+            color: #86868B;
+            line-height: 18px;
+            margin-bottom: 16px;
+            letter-spacing: -0.024em;
+        }
+
+        /* Verify Button */
+        .verify-button {
+            width: 100%;
+            height: 50px;
+            background-color: #E5E5EA;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 500;
+            color: #8E8E93;
+            cursor: not-allowed;
+            transition: all 0.2s ease;
+            letter-spacing: -0.022em;
+        }
+
+        .verify-button.active {
+            background-color: #007AFF;
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+
+        .verify-button:active {
+            opacity: 0.8;
+        }
+
+        /* Secured By Section */
+        .secured-by {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 24px;
+            gap: 12px;
+        }
+
+        .secured-line {
+            flex: 1;
+            max-width: 60px;
+            height: 1px;
+            background-color: #E5E5EA;
+        }
+
+        .secured-text {
+            display: inline-flex;
+            align-items: center;
+        }
+        .secured-image {
+            width: 180px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Apple Badge */
+        .apple-badge {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .apple-pill {
+            background-color: #F5F5F7;
+            padding: 8px 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            color: #1D1D1F;
+            font-weight: 400;
+        }
+
+        /* Loading State */
+        .spinner {
+            width: 20px;
+            aspect-ratio: 1;
+            display: none;
+            margin: 0 auto;
+            border-radius: 50%;
+            background:
+                linear-gradient(0deg ,rgb(0 0 0/50%) 30%,#0000 0 70%,rgb(0 0 0/100%) 0) 50%/8% 100%,
+                linear-gradient(90deg,rgb(0 0 0/25%) 30%,#0000 0 70%,rgb(0 0 0/75% ) 0) 50%/100% 8%;
+            background-repeat: no-repeat;
+            animation: l23 1s infinite steps(12);
+        }
+
+        .spinner::before,
+        .spinner::after {
+            content: "";
+            grid-area: 1/1;
+            border-radius: 50%;
+            background: inherit;
+            opacity: 0.915;
+            transform: rotate(30deg);
+        }
+
+        .spinner::after {
+            opacity: 0.83;
+            transform: rotate(60deg);
+        }
+
+        @keyframes l23 {
+            100% { transform: rotate(1turn); }
+        }
+
+        .verify-button.loading .button-text {
+            display: none;
+        }
+
+        .verify-button.loading .spinner {
+            display: grid;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-height: 820px) {
+            body {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 460px) {
+            body {
+                padding: 0;
+                background-color: #FFFFFF;
+            }
+
+            .mobile-screen {
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .main-content {
+                padding: 24px 20px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-screen">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="back-button" onclick="goBack()">
+                <div class="back-arrow"></div>
+            </div>
+            <div class="header-title-section">
+                <div class="header-title">Apple Finance</div>
+                <div class="cart-total">Cart Total : ₹61,998</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <span class="items-count">2 Items</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Enter OTP</h1>
+        <p class="subtitle">An OTP has been sent to your registered mobile number +919565xxxx45</p>
+
+        <!-- OTP Input -->
+        <div class="input-container">
+            <input
+                type="text"
+                class="otp-input"
+                id="otpInput"
+                placeholder="Enter OTP"
+                maxlength="6"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+            >
+            <div class="error-message" id="errorMessage">Please enter a valid 6-digit OTP</div>
+        </div>
+
+        <!-- Resend Section -->
+        <div class="resend-section">
+            <span class="resend-label">Didn't receive code?</span>
+            <a href="#" class="resend-link" id="resendLink" onclick="resendOTP(event)">Resend OTP</a>
+            <span class="timer" id="timer"></span>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="footer-section">
+            <p class="terms-text">By proceeding, I agree to the Terms & Conditions and Privacy Policies of JUSPAY</p>
+
+            <button class="verify-button" id="verifyButton" onclick="verifyOTP()" disabled>
+                <span class="button-text">Verify</span>
+                <div class="spinner"></div>
+            </button>
+
+            <!-- Secured By -->
+            <div class="secured-by">
+                <div class="secured-line"></div>
+                <span class="secured-text">
+                    <img class="secured-image" src="/api/demonstration/public/images/Juspay-Branding.png" alt="secured by Juspay">
+                </span>
+                <div class="secured-line"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Apple Badge -->
+    <div class="apple-badge">
+        <span class="apple-pill">apple.com</span>
+    </div>
+    </div>
+
+    <script>
+        const otpInput = document.getElementById('otpInput');
+        const verifyButton = document.getElementById('verifyButton');
+        const errorMessage = document.getElementById('errorMessage');
+        const resendLink = document.getElementById('resendLink');
+        const timerElement = document.getElementById('timer');
+
+        let resendTimer = null;
+        let countdown = 30;
+
+        // Validate input - only allow numbers
+        otpInput.addEventListener('input', function(e) {
+            // Remove any non-numeric characters
+            this.value = this.value.replace(/[^0-9]/g, '');
+
+            const otpValue = this.value;
+
+            // Validate length
+            if (otpValue.length === 6) {
+                verifyButton.disabled = false;
+                verifyButton.classList.add('active');
+                errorMessage.classList.remove('show');
+                this.classList.remove('error');
+            } else {
+                verifyButton.disabled = true;
+                verifyButton.classList.remove('active');
+            }
+        });
+
+        // Handle paste
+        otpInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+            const numericOnly = pastedText.replace(/[^0-9]/g, '').slice(0, 6);
+            this.value = numericOnly;
+
+            // Trigger input event manually
+            this.dispatchEvent(new Event('input'));
+        });
+
+        // Verify OTP
+        async function verifyOTP() {
+            const otp = otpInput.value;
+
+            // Client-side validation
+            if (!/^[0-9]{6}$/.test(otp)) {
+                showError('OTP must be 6 digits');
+                return;
+            }
+
+            // Show loading state
+            verifyButton.classList.add('loading');
+            verifyButton.disabled = true;
+
+            try {
+                // Call validation API
+                const response = await fetch('/api/demonstration/validate-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ otp: otp })
+                });
+
+                const data = await response.json();
+
+                if (data.valid) {
+                    // Navigate to OTP verification loader flow
+                    window.location.href = '/api/demonstration/otp-verifying';
+                } else {
+                    showError(data.error || 'Invalid OTP');
+                    verifyButton.classList.remove('loading');
+                    verifyButton.disabled = false;
+                }
+            } catch (error) {
+                showError('Something went wrong. Please try again.');
+                verifyButton.classList.remove('loading');
+                verifyButton.disabled = false;
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            otpInput.classList.add('error');
+        }
+
+        // Resend OTP
+        function resendOTP(event) {
+            event.preventDefault();
+
+            if (resendLink.classList.contains('disabled')) return;
+
+            // Call resend API
+            fetch('/api/demonstration/resend-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Start countdown
+                startResendTimer();
+            })
+            .catch(error => {
+                console.error('Error resending OTP:', error);
+            });
+        }
+
+        // Start resend countdown
+        function startResendTimer() {
+            resendLink.classList.add('disabled');
+            countdown = 30;
+            updateTimerDisplay();
+
+            resendTimer = setInterval(() => {
+                countdown--;
+                updateTimerDisplay();
+
+                if (countdown <= 0) {
+                    clearInterval(resendTimer);
+                    resendLink.classList.remove('disabled');
+                    timerElement.textContent = '';
+                }
+            }, 1000);
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            if (countdown > 0) {
+                timerElement.textContent = `(${countdown}s)`;
+            } else {
+                timerElement.textContent = '';
+            }
+        }
+
+        // Go back
+        function goBack() {
+            window.history.back();
+        }
+
+        // Handle Enter key
+        otpInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.length === 6) {
+                verifyOTP();
+            }
+        });
+    </script>
+</body>
+</html>

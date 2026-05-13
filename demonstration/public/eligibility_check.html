@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apple Finance - Eligibility Check</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #E9EBF0;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            color: #1D1D1F;
+        }
+        .mobile-screen {
+            width: 402px;
+            height: 800px;
+            background: #FFFFFF;
+            border-radius: 24px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .back-button { width: 24px; height: 24px; cursor: pointer; position: relative; }
+        .back-button:before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-left: 2px solid #1D1D1F;
+            border-bottom: 2px solid #1D1D1F;
+            transform: rotate(45deg);
+        }
+        .title-wrap { display: flex; flex-direction: column; }
+        .title { font-size: 16px; font-weight: 590; line-height: 21px; letter-spacing: -0.31px; }
+        .subtitle { font-size: 13px; line-height: 18px; letter-spacing: -0.08px; color: #86868B; }
+        .items { font-size: 15px; text-decoration: underline; }
+
+        .main { flex: 1; overflow-y: auto; padding: 14px 18px 18px; }
+        h1 { font-size: 22px; line-height: 28px; letter-spacing: -0.26px; margin-bottom: 8px; }
+        .hint { font-size: 15px; line-height: 20px; letter-spacing: -0.23px; color: #6E6E73; margin-bottom: 16px; }
+        .soft-check {
+            background: #EAF3FF;
+            border-radius: 16px;
+            color: #007AFF;
+            padding: 14px;
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            margin-bottom: 18px;
+        }
+        .label { font-size: 17px; line-height: 22px; letter-spacing: -0.43px; font-weight: 590; margin: 12px 0 8px; display: flex; align-items: center; gap: 8px; }
+        .input {
+            width: 100%;
+            border: 1px solid #B2B2B7;
+            border-radius: 12px;
+            height: 54px;
+            padding: 0 14px;
+            font-size: 18px;
+            outline: none;
+        }
+        .camera-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            color: #007AFF;
+            transition: opacity 0.2s;
+        }
+        .camera-icon:hover {
+            opacity: 0.7;
+        }
+        .camera-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .camera-modal.active {
+            display: flex;
+        }
+        .camera-container {
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .camera-video {
+            width: 100%;
+            height: 240px;
+            background: #000;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 16px;
+        }
+        .camera-preview {
+            width: 100%;
+            max-height: 240px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .camera-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .camera-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .camera-btn-primary {
+            background: #007AFF;
+            color: #fff;
+        }
+        .camera-btn-secondary {
+            background: #f3f3f7;
+            color: #1D1D1F;
+        }
+        .camera-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .extraction-status {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #6E6E73;
+            min-height: 20px;
+        }
+        .extraction-loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #007AFF;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .row { display: flex; gap: 10px; }
+        .muted { color: #71819A; font-size: 14px; margin: 8px 0 6px; }
+        .error-text { color: #FF3B30; font-size: 12px; margin: 6px 0 2px; min-height: 16px; }
+        .disabled {
+            background: #F4F4F6;
+            color: #A4A4AA;
+        }
+        .footer-actions {
+            border-top: 1px solid #ECECEF;
+            background: #FFFFFF;
+            padding: 14px 18px 18px;
+        }
+        .submit {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 16px;
+            background: #007AFF;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .submit.enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .apple-badge { display: flex; justify-content: center; padding: 14px 0 0; }
+        .apple-pill { background: #F5F5F7; padding: 8px 20px; border-radius: 999px; font-size: 15px; }
+        @media (max-width: 460px) {
+            body { padding: 0; background: #fff; }
+            .mobile-screen { border-radius: 0; box-shadow: none; }
+            h1 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-screen">
+        <header class="header">
+            <div class="header-left">
+                <div class="back-button" onclick="window.location.href='/api/demonstration/otp'"></div>
+                <div class="title-wrap">
+                    <div class="title">Apple Finance</div>
+                    <div class="subtitle">Cart Total : ₹61,998</div>
+                </div>
+            </div>
+            <div class="items">2 Items</div>
+        </header>
+
+        <main class="main">
+            <h1>Eligibility Check</h1>
+            <p class="hint">A few details to find your best EMI offers.</p>
+            <div class="soft-check">This is a soft check - no impact on your credit score.</div>
+
+            <div class="label">
+                PAN
+                <svg class="camera-icon" id="cameraIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="6" width="18" height="12" rx="2"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M8 6l1.5-2h5L16 6"/>
+                </svg>
+            </div>
+            <input class="input" id="pan" placeholder="PAN" maxlength="10" />
+            <div class="muted">Used to verify your identity and check EMI eligibility</div>
+            <div id="panError" class="error-text"></div>
+
+            <div class="label">Your Name</div>
+            <div class="row">
+                <input class="input" id="firstName" placeholder="First Name" />
+                <input class="input" id="lastName" placeholder="Last Name" />
+            </div>
+            <div id="nameError" class="error-text"></div>
+
+            <div class="label">Mobile Number</div>
+            <input class="input disabled" value="+919565xxxx45" disabled />
+
+        </main>
+        <div class="footer-actions">
+            <button id="continueBtn" class="submit">Continue</button>
+            <div class="apple-badge"><span class="apple-pill">apple.com</span></div>
+        </div>
+    </div>
+
+    <!-- Camera Modal for PAN Scanning -->
+    <div class="camera-modal" id="cameraModal">
+        <div class="camera-container">
+            <h3 style="margin-bottom: 16px; font-size: 18px;">Scan PAN Card</h3>
+            <p style="color: #6E6E73; font-size: 14px; margin-bottom: 16px;">Position your PAN card within the frame</p>
+            <video class="camera-video" id="cameraVideo" autoplay playsinline muted></video>
+            <img class="camera-preview" id="capturedImage" alt="Captured PAN card" />
+            <div class="extraction-status" id="extractionStatus"></div>
+            <div class="camera-buttons">
+                <button class="camera-btn camera-btn-secondary" id="closeCameraBtn">Cancel</button>
+                <button class="camera-btn camera-btn-primary" id="captureBtn">Capture</button>
+                <button class="camera-btn camera-btn-primary" id="retakeBtn" style="display: none;">Retake</button>
+                <button class="camera-btn camera-btn-primary" id="confirmBtn" style="display: none;">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pan = document.getElementById('pan');
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        const continueBtn = document.getElementById('continueBtn');
+        const panError = document.getElementById('panError');
+        const nameError = document.getElementById('nameError');
+
+        // Camera elements
+        const cameraIcon = document.getElementById('cameraIcon');
+        const cameraModal = document.getElementById('cameraModal');
+        const cameraVideo = document.getElementById('cameraVideo');
+        const capturedImage = document.getElementById('capturedImage');
+        const closeCameraBtn = document.getElementById('closeCameraBtn');
+        const captureBtn = document.getElementById('captureBtn');
+        const retakeBtn = document.getElementById('retakeBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const extractionStatus = document.getElementById('extractionStatus');
+
+        let mediaStream = null;
+        let capturedImageData = null;
+
+        function validate() {
+            const panValue = pan.value.trim();
+            const firstValue = firstName.value.trim();
+            const lastValue = lastName.value.trim();
+            const panValid = /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panValue);
+            const firstValid = /^[A-Za-z ]{2,}$/.test(firstValue);
+            const lastValid = /^[A-Za-z ]{2,}$/.test(lastValue);
+            panError.textContent = panValue && !panValid ? 'Enter valid PAN (AAAAA0000B)' : '';
+            nameError.textContent =
+                (firstValue && !firstValid) || (lastValue && !lastValid)
+                    ? 'Names must be at least 2 letters'
+                    : '';
+            if (panValid && firstValid && lastValid) {
+                continueBtn.classList.add('enabled');
+            } else {
+                continueBtn.classList.remove('enabled');
+            }
+        }
+
+        pan.addEventListener('input', () => {
+            pan.value = pan.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            validate();
+        });
+        firstName.addEventListener('input', validate);
+        lastName.addEventListener('input', validate);
+
+        continueBtn.addEventListener('click', () => {
+            if (!continueBtn.classList.contains('enabled')) return;
+            window.location.href = '/api/demonstration/details-verifying';
+        });
+
+        // Camera functionality
+        async function openCamera() {
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'environment' }, 
+                    audio: false 
+                });
+                cameraVideo.srcObject = mediaStream;
+                cameraModal.classList.add('active');
+            } catch (error) {
+                alert('Unable to access camera. Please allow camera permissions.');
+                console.error('Camera error:', error);
+            }
+        }
+
+        function stopCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+            cameraVideo.srcObject = null;
+        }
+
+        function closeCameraModal() {
+            stopCamera();
+            cameraModal.classList.remove('active');
+            resetCameraUI();
+        }
+
+        function resetCameraUI() {
+            cameraVideo.style.display = 'block';
+            capturedImage.style.display = 'none';
+            captureBtn.style.display = 'inline-block';
+            retakeBtn.style.display = 'none';
+            confirmBtn.style.display = 'none';
+            confirmBtn.disabled = false;
+            extractionStatus.innerHTML = '';
+            extractionStatus.style.color = '#6E6E73';
+            capturedImageData = null;
+        }
+
+        function captureImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = cameraVideo.videoWidth;
+            canvas.height = cameraVideo.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+            
+            capturedImageData = canvas.toDataURL('image/jpeg', 0.9);
+            capturedImage.src = capturedImageData;
+            
+            cameraVideo.style.display = 'none';
+            capturedImage.style.display = 'block';
+            captureBtn.style.display = 'none';
+            retakeBtn.style.display = 'inline-block';
+            confirmBtn.style.display = 'inline-block';
+        }
+
+        async function extractPanFromImage() {
+            if (!capturedImageData) return;
+
+            // Convert data URL to base64
+            const base64Image = capturedImageData.split(',')[1];
+            
+            extractionStatus.innerHTML = '<div class="extraction-loading"><div class="spinner"></div>Extracting PAN details...</div>';
+            confirmBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/demonstration/extract-pan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        image: base64Image,
+                        upload_type: 'base64'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    extractionStatus.innerHTML = '✓ PAN details extracted successfully!';
+                    extractionStatus.style.color = '#34C759';
+                    
+                    // Fill form fields with extracted data
+                    if (result.data.pan) {
+                        pan.value = result.data.pan;
+                    }
+                    if (result.data.name) {
+                        const nameParts = result.data.name.split(' ');
+                        if (nameParts.length >= 2) {
+                            firstName.value = nameParts[0];
+                            lastName.value = nameParts.slice(1).join(' ');
+                        } else {
+                            firstName.value = result.data.name;
+                        }
+                    }
+                    
+                    validate();
+                    
+                    // Close modal after a brief delay
+                    setTimeout(() => {
+                        closeCameraModal();
+                    }, 1500);
+                } else {
+                    extractionStatus.innerHTML = '⚠ Could not extract PAN details. Please try again or enter manually.';
+                    extractionStatus.style.color = '#FF3B30';
+                    confirmBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Extraction error:', error);
+                extractionStatus.innerHTML = '⚠ Extraction failed. Please try again or enter details manually.';
+                extractionStatus.style.color = '#FF3B30';
+                confirmBtn.disabled = false;
+            }
+        }
+
+        cameraIcon.addEventListener('click', openCamera);
+        closeCameraBtn.addEventListener('click', closeCameraModal);
+        captureBtn.addEventListener('click', captureImage);
+        retakeBtn.addEventListener('click', resetCameraUI);
+        confirmBtn.addEventListener('click', extractPanFromImage);
+
+        // Close modal on backdrop click
+        cameraModal.addEventListener('click', (e) => {
+            if (e.target === cameraModal) {
+                closeCameraModal();
+            }
+        });
+
+        window.addEventListener('beforeunload', stopCamera);
+    </script>
+</body>
+</html>

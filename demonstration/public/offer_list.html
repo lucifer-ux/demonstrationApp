@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apple Finance - EMI Offers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #E9EBF0;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            color: #1D1D1F;
+        }
+        .mobile-screen {
+            width: 402px;
+            height: 800px;
+            background: #EFEFEF;
+            border-radius: 24px;
+            box-shadow: 0 18px 48px rgba(0,0,0,0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .topbar {
+            background: #EFEFEF;
+            border-bottom: 1px solid #e1e1e4;
+        }
+        .status {
+            height: 62px;
+            padding: 21px 24px 19px;
+            display: flex;
+            align-items: center;
+            font-size: 17px;
+            font-weight: 590;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+        }
+        .header {
+            padding: 12px 20px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .back {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+        }
+        .back::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-left: 2px solid #1D1D1F;
+            border-bottom: 2px solid #1D1D1F;
+            transform: rotate(45deg);
+        }
+        .title-wrap { display: flex; flex-direction: column; gap: 4px; }
+        .title { font-size: 16px; font-weight: 590; line-height: 21px; letter-spacing: -0.31px; }
+        .cart { font-size: 13px; line-height: 18px; letter-spacing: -0.08px; color: #86868B; }
+        .items { font-size: 12px; line-height: 16px; text-decoration: underline; }
+
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 20px 18px;
+        }
+        .step { font-size: 16px; line-height: 21px; letter-spacing: -0.31px; color: #6E6E73; margin-bottom: 10px; }
+        .progress {
+            height: 12px;
+            background: #D9D9DD;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+        .progress > span {
+            display: block;
+            width: 32%;
+            height: 100%;
+            background: #0A84FF;
+            border-radius: 999px;
+        }
+
+        .intro {
+            background: transparent;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #d4d5da;
+        }
+        .intro h1 {
+            font-size: 22px;
+            line-height: 28px;
+            letter-spacing: -0.26px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .intro p {
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #6E6E73;
+            max-width: 90%;
+        }
+
+        .offer-card {
+            margin-top: 14px;
+            border: 1px solid #8f8f96;
+            border-radius: 24px;
+            background: #EFEFEF;
+            padding: 14px;
+            cursor: pointer;
+        }
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .lender {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            border: 1px solid #cfcfd4;
+            background: #f3f3f5;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            padding: 8px;
+        }
+        .logo-box img { width: 100%; height: auto; display: block; }
+        .lender-name { font-size: 17px; line-height: 22px; letter-spacing: -0.43px; font-weight: 590; }
+        .lender-note { font-size: 15px; line-height: 20px; letter-spacing: -0.23px; color: #FF7A00; margin-top: 3px; }
+        .chevron { font-size: 24px; line-height: 1; color: #1D1D1F; }
+
+        .divider { height: 1px; background: #d9d9dd; margin: 10px 0; }
+        .emi-label { font-size: 15px; line-height: 20px; letter-spacing: -0.23px; color: #86868B; }
+        .emi-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .emi-value { font-size: 22px; font-weight: 700; line-height: 28px; letter-spacing: -0.26px; }
+        .save { font-size: 15px; line-height: 20px; letter-spacing: -0.23px; color: #1FB14A; white-space: nowrap; }
+
+        .meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .meta-item { border-right: 1px solid #d7d7db; padding-right: 8px; }
+        .meta-item:last-child { border-right: none; }
+        .meta-k { font-size: 15px; line-height: 20px; color: #86868B; letter-spacing: -0.23px; }
+        .meta-v { font-size: 15px; line-height: 20px; letter-spacing: -0.23px; font-weight: 590; margin-top: 2px; }
+        .learn {
+            margin-top: 12px;
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #6E6E73;
+        }
+        .learn a { color: #0A84FF; text-decoration: none; }
+
+        .apple-badge {
+            position: absolute;
+            left: 50%;
+            bottom: 84px;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        .apple-pill {
+            background: #F5F5F7;
+            padding: 8px 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            color: #1D1D1F;
+            box-shadow: 0 2px 40px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 460px) {
+            body { padding: 0; background: #EFEFEF; }
+            .mobile-screen { border-radius: 0; box-shadow: none; }
+            .intro h1 { font-size: 22px; }
+            .lender-name { font-size: 17px; }
+            .emi-value { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-screen">
+        <div class="topbar">
+            <div class="status">
+                <div>9:41</div>
+            </div>
+            <div class="header">
+                <div class="header-left">
+                    <div class="back" onclick="window.location.href='/api/demonstration/camera-verification'"></div>
+                    <div class="title-wrap">
+                        <div class="title">Apple Finance</div>
+                        <div class="cart">Cart Total : <strong>₹61,998</strong></div>
+                    </div>
+                </div>
+                <div class="items">2 Items</div>
+            </div>
+        </div>
+
+        <main class="main">
+            <div class="step">Step 1/3</div>
+            <div class="progress"><span></span></div>
+
+            <div class="intro">
+                <h1>Your EMI offers</h1>
+                <p>2 lenders approved you. Pick the plan that works best.</p>
+            </div>
+
+            <article class="offer-card" onclick="selectLender('tvs')">
+                <div class="card-top">
+                    <div class="lender">
+                        <div class="logo-box"><img src="/api/demonstration/public/images/JP_TVS Credit-Lender.png" alt="TVS Credit"></div>
+                        <div>
+                            <div class="lender-name">TVS Credit</div>
+                            <div class="lender-note">No Cost EMI Available</div>
+                        </div>
+                    </div>
+                    <div class="chevron">›</div>
+                </div>
+                <div class="divider"></div>
+                <div class="emi-label">EMI starting from</div>
+                <div class="emi-line">
+                    <div class="emi-value">₹7,416/mo</div>
+                    <div class="save">Save ₹1,239 with this offer</div>
+                </div>
+                <div class="divider"></div>
+                <div class="meta">
+                    <div class="meta-item">
+                        <div class="meta-k">Tenure</div>
+                        <div class="meta-v">3-9 months</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-k">Interest</div>
+                        <div class="meta-v">0-18%</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-k">Processing Fee</div>
+                        <div class="meta-v">₹354</div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="learn">Learn more about <a href="#">penalties and charges</a></div>
+            </article>
+
+            <article class="offer-card" style="margin-bottom: 24px;" onclick="selectLender('dmi')">
+                <div class="card-top">
+                    <div class="lender">
+                        <div class="logo-box"><img src="/api/demonstration/public/images/JP_DMI-Lender.png" alt="DMI Finance"></div>
+                        <div>
+                            <div class="lender-name">DMI Finance</div>
+                        </div>
+                    </div>
+                    <div class="chevron">›</div>
+                </div>
+                <div class="divider"></div>
+                <div class="emi-label">EMI starting from</div>
+                <div class="emi-line">
+                    <div class="emi-value">₹2,935/mo</div>
+                    <div class="save">Save ₹1,239 with this offer</div>
+                </div>
+                <div class="divider"></div>
+                <div class="meta">
+                    <div class="meta-item">
+                        <div class="meta-k">Tenure</div>
+                        <div class="meta-v">3-18 months</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-k">Interest</div>
+                        <div class="meta-v">0-24%</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-k">Processing Fee</div>
+                        <div class="meta-v">₹412</div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="learn">Learn more about <a href="#">penalties and charges</a></div>
+            </article>
+        </main>
+
+        <div class="apple-badge"><span class="apple-pill">apple.com</span></div>
+    </div>
+    <script>
+        function selectLender(lender) {
+            sessionStorage.setItem('selectedLender', lender);
+            window.location.href = '/api/demonstration/processing-application';
+        }
+    </script>
+</body>
+</html>

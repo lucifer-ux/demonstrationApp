@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apple Finance - Credit Approved</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #e9ebf0;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            color: #111827;
+        }
+        .mobile-screen {
+            width: 402px;
+            height: 800px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 110px 24px 24px;
+        }
+        .burst {
+            width: 150px;
+            height: 190px;
+            position: relative;
+            margin-bottom: 26px;
+        }
+        .capsule {
+            position: absolute;
+            left: 50%;
+            top: 28px;
+            width: 68px;
+            height: 120px;
+            transform: translateX(-50%) rotate(-6deg);
+            border-radius: 36px 36px 24px 24px;
+            background: linear-gradient(180deg, #b6d8ff 0%, #5a97f7 45%, #3776e6 100%);
+            box-shadow: 0 12px 30px rgba(44, 118, 255, 0.28);
+        }
+        .capsule::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 16px;
+            width: 16px;
+            height: 92px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.22);
+        }
+        .spark,
+        .spark2,
+        .spark3,
+        .spark4 {
+            position: absolute;
+            border-radius: 40px;
+            background: linear-gradient(180deg, #ffae52 0%, #ea6f31 100%);
+        }
+        .spark { width: 42px; height: 26px; left: 28px; top: 0; transform: rotate(36deg); }
+        .spark2 { width: 48px; height: 22px; right: 28px; top: 8px; transform: rotate(-22deg); }
+        .spark3 { width: 14px; height: 44px; left: 140px; top: 14px; transform: rotate(12deg); }
+        .spark4 { width: 18px; height: 38px; left: 102px; top: 24px; transform: rotate(32deg); }
+        .shadow {
+            width: 74px;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(66, 142, 255, 0.18);
+            margin-top: 138px;
+        }
+        .title {
+            font-size: 22px;
+            line-height: 28px;
+            letter-spacing: -0.26px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .headline {
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+            margin-bottom: 18px;
+        }
+        .headline strong { font-weight: 700; }
+        .subcopy {
+            max-width: 330px;
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #8e8e93;
+            margin-bottom: 58px;
+        }
+        .footer-copy {
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+            margin-bottom: 250px;
+        }
+        .brand {
+            display: flex;
+            justify-content: center;
+            margin-top: auto;
+            margin-bottom: 90px;
+        }
+        .brand img {
+            width: 280px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .apple-badge {
+            display: flex;
+            justify-content: center;
+            padding: 0 0 24px;
+        }
+        .apple-pill {
+            background: #f5f5f7;
+            padding: 8px 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            color: #1d1d1f;
+            box-shadow: 0 2px 40px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 460px) {
+            body { padding: 0; background: #ffffff; }
+            .mobile-screen { border-radius: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-screen">
+        <div class="content">
+            <div class="burst">
+                <div class="spark"></div>
+                <div class="spark2"></div>
+                <div class="spark3"></div>
+                <div class="spark4"></div>
+                <div class="capsule"></div>
+                <div class="shadow"></div>
+            </div>
+            <div class="title">Congratulations!</div>
+            <div class="headline">Credit line of up to <strong>Rs75,000</strong> has been approved.</div>
+            <div class="subcopy">This credit line can be used in future as well to purchase any apple product without multiple verification.</div>
+            <div class="footer-copy">Fetching Plans...</div>
+            <div class="brand">
+                <img src="/api/demonstration/public/images/Juspay-Branding.png" alt="secured by Juspay">
+            </div>
+        </div>
+        <div class="apple-badge"><span class="apple-pill">apple.com</span></div>
+    </div>
+    <script>
+        setTimeout(() => {
+            window.location.href = '/api/demonstration/loading-best-plans';
+        }, 2200);
+    </script>
+</body>
+</html>

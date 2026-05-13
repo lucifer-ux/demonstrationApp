@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apple Finance - Payment Successful</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #E9EBF0;
+            color: #1D1D1F;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .mobile-screen {
+            width: 402px;
+            height: 800px;
+            background-color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+        }
+
+        /* Header Section */
+        .header {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-button {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-arrow {
+            width: 12px;
+            height: 12px;
+            border-left: 2px solid #1D1D1F;
+            border-bottom: 2px solid #1D1D1F;
+            transform: rotate(45deg);
+        }
+
+        .header-title {
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -0.022em;
+            line-height: 22px;
+        }
+
+        .header-right {
+            width: 24px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Success Icon */
+        .success-icon-container {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(52, 199, 89, 0.3);
+        }
+
+        .success-checkmark {
+            width: 36px;
+            height: 20px;
+            border-left: 4px solid #FFFFFF;
+            border-bottom: 4px solid #FFFFFF;
+            transform: rotate(-45deg) translate(2px, -4px);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.021em;
+            margin-bottom: 12px;
+            line-height: 34px;
+        }
+
+        .subtitle {
+            font-size: 17px;
+            color: #6E6E73;
+            line-height: 22px;
+            margin-bottom: 40px;
+            letter-spacing: -0.022em;
+        }
+
+        /* Order Details Card */
+        .order-card {
+            width: 100%;
+            max-width: 360px;
+            background-color: #F5F5F7;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 0.5px solid #D2D2D7;
+        }
+
+        .order-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-label {
+            font-size: 15px;
+            color: #6E6E73;
+            letter-spacing: -0.016em;
+        }
+
+        .order-value {
+            font-size: 15px;
+            color: #1D1D1F;
+            font-weight: 500;
+            letter-spacing: -0.016em;
+        }
+
+        .order-value.amount {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        /* Item Preview */
+        .item-preview {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #F5F5F7 0%, #E8E8ED 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .item-details {
+            flex: 1;
+            text-align: left;
+        }
+
+        .item-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1D1D1F;
+            margin-bottom: 4px;
+        }
+
+        .item-variant {
+            font-size: 13px;
+            color: #6E6E73;
+        }
+
+        .item-count {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1D1D1F;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            width: 100%;
+            max-width: 360px;
+            margin-top: auto;
+        }
+
+        /* Continue Shopping Button */
+        .continue-button {
+            width: 100%;
+            height: 50px;
+            background-color: #007AFF;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 500;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: -0.022em;
+            margin-bottom: 12px;
+        }
+
+        .continue-button:hover {
+            background-color: #0051D5;
+        }
+
+        .continue-button:active {
+            opacity: 0.8;
+        }
+
+        /* View Orders Link */
+        .view-orders {
+            font-size: 15px;
+            color: #007AFF;
+            text-decoration: none;
+            cursor: pointer;
+            display: block;
+            text-align: center;
+            padding: 12px;
+        }
+
+        .view-orders:hover {
+            text-decoration: underline;
+        }
+
+        /* Secured By Section */
+        .secured-by {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 24px;
+            gap: 12px;
+        }
+
+        .secured-line {
+            flex: 1;
+            max-width: 60px;
+            height: 1px;
+            background-color: #E5E5EA;
+        }
+
+        .secured-text {
+            display: inline-flex;
+            align-items: center;
+        }
+        .secured-image {
+            width: 180px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Apple Badge */
+        .apple-badge {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .apple-pill {
+            background-color: #F5F5F7;
+            padding: 8px 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            color: #1D1D1F;
+            font-weight: 400;
+        }
+
+        /* Confetti Animation */
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti:nth-child(1) { left: 10%; background: #007AFF; animation: confetti-fall 3s ease-out; }
+        .confetti:nth-child(2) { left: 20%; background: #34C759; animation: confetti-fall 3.5s ease-out 0.2s; }
+        .confetti:nth-child(3) { left: 30%; background: #FF9500; animation: confetti-fall 2.8s ease-out 0.4s; }
+        .confetti:nth-child(4) { left: 40%; background: #FF3B30; animation: confetti-fall 3.2s ease-out 0.1s; }
+        .confetti:nth-child(5) { left: 50%; background: #5856D6; animation: confetti-fall 3.7s ease-out 0.3s; }
+        .confetti:nth-child(6) { left: 60%; background: #AF52DE; animation: confetti-fall 2.9s ease-out 0.5s; }
+        .confetti:nth-child(7) { left: 70%; background: #007AFF; animation: confetti-fall 3.3s ease-out 0.2s; }
+        .confetti:nth-child(8) { left: 80%; background: #34C759; animation: confetti-fall 3.6s ease-out 0.4s; }
+        .confetti:nth-child(9) { left: 90%; background: #FF9500; animation: confetti-fall 3.1s ease-out 0.1s; }
+
+        /* Responsive Adjustments */
+        @media (max-height: 820px) {
+            body {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 460px) {
+            body {
+                padding: 0;
+                background-color: #FFFFFF;
+            }
+
+            .mobile-screen {
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .main-content {
+                padding: 32px 20px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-screen">
+    <!-- Confetti Effect -->
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="back-button" onclick="goBack()">
+                <div class="back-arrow"></div>
+            </div>
+            <div class="header-title">Apple Finance</div>
+        </div>
+        <div class="header-right"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Success Icon -->
+        <div class="success-icon-container">
+            <div class="success-checkmark"></div>
+        </div>
+
+        <h1 class="page-title">Payment Successful!</h1>
+        <p class="subtitle">Thank you for your purchase. Your order has been confirmed.</p>
+
+        <!-- Order Details Card -->
+        <div class="order-card">
+            <div class="order-row">
+                <span class="order-label">Order ID</span>
+                <span class="order-value">#APL-98765432</span>
+            </div>
+            <div class="order-row">
+                <span class="order-label">Date</span>
+                <span class="order-value" id="currentDate">--</span>
+            </div>
+            <div class="order-row">
+                <span class="order-label">Payment Method</span>
+                <span class="order-value">Juspay UPI</span>
+            </div>
+            <div class="order-row">
+                <span class="order-label">Total Amount</span>
+                <span class="order-value amount">₹61,998</span>
+            </div>
+
+            <!-- Item Preview -->
+            <div class="item-preview">
+                <div class="item-image">📱</div>
+                <div class="item-details">
+                    <div class="item-name">iPhone 15 Pro</div>
+                    <div class="item-variant">Natural Titanium • 128GB</div>
+                </div>
+                <div class="item-count">× 2</div>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="footer-section">
+            <button class="continue-button" onclick="continueShopping()">Continue Shopping</button>
+            <a href="#" class="view-orders" onclick="viewOrders(event)">View My Orders</a>
+
+            <!-- Secured By -->
+            <div class="secured-by">
+                <div class="secured-line"></div>
+                <span class="secured-text">
+                    <img class="secured-image" src="/images/Juspay-Branding.png" alt="secured by Juspay">
+                </span>
+                <div class="secured-line"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Apple Badge -->
+    <div class="apple-badge">
+        <span class="apple-pill">apple.com</span>
+    </div>
+    </div>
+
+    <script>
+        // Set current date
+        const dateElement = document.getElementById('currentDate');
+        const today = new Date();
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        dateElement.textContent = today.toLocaleDateString('en-IN', options);
+
+        // Continue shopping
+        function continueShopping() {
+            // Navigate back to home/start
+            window.location.href = '/';
+        }
+
+        // View orders
+        function viewOrders(event) {
+            event.preventDefault();
+            alert('This would navigate to the order history page.');
+        }
+
+        // Go back
+        function goBack() {
+            window.location.href = '/';
+        }
+
+        // Auto-confetti animation (remove after animation)
+        setTimeout(() => {
+            const confettiElements = document.querySelectorAll('.confetti');
+            confettiElements.forEach(el => el.remove());
+        }, 4000);
+    </script>
+</body>
+</html>

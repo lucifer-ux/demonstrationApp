@@ -1,0 +1,13 @@
+{
+  "name": "demonstration-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "deploy": "vercel --prod",
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

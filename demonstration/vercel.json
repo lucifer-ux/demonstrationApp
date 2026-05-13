@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/otp", "destination": "/otp/index.html" },
+    { "source": "/payment-success", "destination": "/payment-success/index.html" },
+    { "source": "/otp-verifying", "destination": "/otp-verifying/index.html" },
+    { "source": "/otp-success", "destination": "/otp-success/index.html" },
+    { "source": "/eligibility-check", "destination": "/eligibility-check/index.html" },
+    { "source": "/details-verifying", "destination": "/details-verifying/index.html" },
+    { "source": "/about-you", "destination": "/about-you/index.html" },
+    { "source": "/camera-verification", "destination": "/camera-verification/index.html" },
+    { "source": "/offer", "destination": "/offer/index.html" },
+    { "source": "/fetching-lenders", "destination": "/fetching-lenders/index.html" },
+    { "source": "/offer-list", "destination": "/offer-list/index.html" },
+    { "source": "/processing-application", "destination": "/processing-application/index.html" },
+    { "source": "/approval-success", "destination": "/approval-success/index.html" },
+    { "source": "/loading-best-plans", "destination": "/loading-best-plans/index.html" },
+    { "source": "/choose-plan", "destination": "/choose-plan/index.html" },
+    { "source": "/plan-summary", "destination": "/plan-summary/index.html" },
+    { "source": "/initiating-mandate", "destination": "/initiating-mandate/index.html" },
+    { "source": "/mandate-setup", "destination": "/mandate-setup/index.html" },
+    { "source": "/setting-up-mandate", "destination": "/setting-up-mandate/index.html" },
+    { "source": "/mandate-complete", "destination": "/mandate-complete/index.html" },
+    { "source": "/preparing-agreement", "destination": "/preparing-agreement/index.html" },
+    { "source": "/loan-agreement", "destination": "/loan-agreement/index.html" },
+    { "source": "/finalising-emi", "destination": "/finalising-emi/index.html" },
+    { "source": "/all-set", "destination": "/all-set/index.html" },
+    { "source": "/:path*", "destination": "/index.html" }
+  ]
+}

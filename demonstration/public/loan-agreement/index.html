@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apple Finance - Agreement</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #e9ebf0;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            color: #1d1d1f;
+        }
+        .mobile-screen {
+            width: 402px;
+            height: 800px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header {
+            padding: 18px 20px 16px;
+        }
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .back {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+        }
+        .back::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-left: 2px solid #1d1d1f;
+            border-bottom: 2px solid #1d1d1f;
+            transform: rotate(45deg);
+        }
+        .title-wrap { display: flex; flex-direction: column; gap: 4px; }
+        .brand-title { font-size: 16px; line-height: 21px; letter-spacing: -0.31px; font-weight: 590; }
+        .cart { font-size: 13px; line-height: 18px; letter-spacing: -0.08px; color: #86868b; }
+        .items { font-size: 12px; line-height: 16px; text-decoration: underline; }
+        .step {
+            margin-top: 22px;
+            font-size: 16px;
+            line-height: 21px;
+            letter-spacing: -0.31px;
+            color: #6e6e73;
+        }
+        .progress {
+            margin-top: 12px;
+            height: 8px;
+            background: #d9d9dd;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: #0a84ff;
+            border-radius: 999px;
+        }
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 20px 20px;
+        }
+        .title-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+        .hero-title {
+            font-size: 22px;
+            line-height: 28px;
+            letter-spacing: -0.26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .hero-sub {
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #6e6e73;
+        }
+        .logo-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            border: 1px solid #d0d1d7;
+            background: #ffffff;
+            display: grid;
+            place-items: center;
+            padding: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .logo-box img { width: 100%; height: auto; display: block; }
+        .doc-card {
+            margin-top: 18px;
+            border: 1px solid #b7b7bc;
+            border-radius: 24px;
+            background: #ffffff;
+            min-height: 470px;
+            padding: 12px;
+            overflow: hidden;
+        }
+        .agreement-frame {
+            width: 100%;
+            height: 446px;
+            border: 1px solid #e2e3e8;
+            border-radius: 16px;
+            background: #f8f8fa;
+            overflow: auto;
+        }
+        .agreement-frame embed {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+        .footer {
+            border-top: 1px solid #ececef;
+            background: #ffffff;
+            padding: 18px 20px 18px;
+        }
+        .consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 18px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .checkbox {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            border: 2px solid #d3d7df;
+            background: #ffffff;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            margin-top: 2px;
+        }
+        .checkbox::after {
+            content: '';
+            width: 13px;
+            height: 7px;
+            border-left: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+            transform: rotate(-45deg) translateY(-1px);
+        }
+        .consent.checked .checkbox {
+            background: #0a84ff;
+            border-color: #0a84ff;
+        }
+        .consent.checked .checkbox::after {
+            border-left-color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        .consent-text {
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #6e6e73;
+        }
+        .cta {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 18px;
+            background: #e5e5ea;
+            color: #b3b3ba;
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+            font-weight: 590;
+            cursor: default;
+        }
+        .cta.enabled {
+            background: #0a84ff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .footer-brand {
+            display: flex;
+            justify-content: center;
+            padding-top: 18px;
+        }
+        .footer-brand img {
+            width: 182px;
+            height: auto;
+            display: block;
+        }
+        .apple-badge {
+            display: flex;
+            justify-content: center;
+            padding-top: 14px;
+        }
+        .apple-pill {
+            background: #f5f5f7;
+            padding: 8px 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            color: #1d1d1f;
+            box-shadow: 0 2px 40px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 460px) {
+            body { padding: 0; background: #ffffff; }
+            .mobile-screen { border-radius: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-screen">
+        <div class="header">
+            <div class="header-row">
+                <div class="header-left">
+                    <div class="back" onclick="window.location.href='/mandate-complete'"></div>
+                    <div class="title-wrap">
+                        <div class="brand-title">Apple Finance</div>
+                        <div class="cart">Cart Total : <strong>₹61,998</strong></div>
+                    </div>
+                </div>
+                <div class="items">2 Items</div>
+            </div>
+            <div class="step">Step 3/3</div>
+            <div class="progress"><span></span></div>
+        </div>
+        <main class="main">
+            <div class="title-row">
+                <div>
+                    <div class="hero-title">Agreement</div>
+                    <div class="hero-sub">Please read the document and e-sign</div>
+                </div>
+                <div class="logo-box">
+                    <img src="/images/JP_TVS Credit-Lender.png" alt="TVS Credit">
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <div class="agreement-frame">
+                    <embed src="/images/agreement.pdf" type="application/pdf">
+                </div>
+            </div>
+        </main>
+        <div class="footer">
+            <label id="consent" class="consent">
+                <span class="checkbox"></span>
+                <span class="consent-text">I have read the documents and agree to the Terms & Conditions and Privacy Policies.</span>
+            </label>
+            <button id="agreeBtn" class="cta" type="button">Agree &amp; Continue</button>
+            <div class="footer-brand">
+                <img src="/images/Juspay-Branding.png" alt="secured by Juspay">
+            </div>
+            <div class="apple-badge"><span class="apple-pill">apple.com</span></div>
+        </div>
+    </div>
+    <script>
+        const consent = document.getElementById('consent');
+        const agreeBtn = document.getElementById('agreeBtn');
+        let checked = false;
+
+        consent.addEventListener('click', () => {
+            checked = !checked;
+            consent.classList.toggle('checked', checked);
+            agreeBtn.classList.toggle('enabled', checked);
+        });
+
+        agreeBtn.addEventListener('click', () => {
+            if (!checked) return;
+            window.location.href = '/finalising-emi';
+        });
+    </script>
+</body>
+</html>

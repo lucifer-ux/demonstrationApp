@@ -67,7 +67,8 @@
     { "source": "/api/demonstration/finalising-emi", "destination": "/finalising_emi.html" },
     { "source": "/api/demonstration/all-set", "destination": "/all_set.html" },
     { "source": "/api/demonstration/pages/:page", "destination": "/:page.html" },
-    { "source": "/api/demonstration", "destination": "/index.html" }
+    { "source": "/api/demonstration", "destination": "/index.html" },
+    { "source": "/:path*", "destination": "/index.html" }
   ],
   "headers": [
     {

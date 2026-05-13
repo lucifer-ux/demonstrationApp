@@ -11,6 +11,8 @@ This project is now set up as a static Vercel app with small serverless API func
 
 Make sure Vercel's root directory is the repository/project root that contains `vercel.json`, `api/`, and `public/`. If the root directory is set to `demonstration/`, Vercel will miss the deployment config and the clean routes can return 404.
 
+After changing files, trigger a new deployment and use the new deployment URL or the production alias. Vercel deployment URLs with hashes are immutable, so an older URL can keep returning 404 even after the code is fixed.
+
 ## Environment variables
 
 Add these in Vercel Project Settings > Environment Variables:

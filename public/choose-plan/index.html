@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apple Finance - Choose Plan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #e9ebf0;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            color: #1d1d1f;
+        }
+        .mobile-screen {
+            width: 402px;
+            height: 800px;
+            background: #efefef;
+            border-radius: 24px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            padding: 18px 20px 16px;
+            background: #efefef;
+        }
+        .header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .back {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+        }
+        .back::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-left: 2px solid #1d1d1f;
+            border-bottom: 2px solid #1d1d1f;
+            transform: rotate(45deg);
+        }
+        .title-wrap { display: flex; flex-direction: column; gap: 4px; }
+        .title { font-size: 16px; line-height: 21px; letter-spacing: -0.31px; font-weight: 590; }
+        .cart { font-size: 13px; line-height: 18px; letter-spacing: -0.08px; color: #86868b; }
+        .items { font-size: 12px; line-height: 16px; text-decoration: underline; }
+        .step {
+            margin-top: 22px;
+            font-size: 16px;
+            line-height: 21px;
+            letter-spacing: -0.31px;
+            color: #6e6e73;
+        }
+        .progress {
+            margin-top: 12px;
+            height: 12px;
+            background: #d9d9dd;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress span {
+            display: block;
+            width: 32%;
+            height: 100%;
+            background: #0a84ff;
+            border-radius: 999px;
+        }
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px 20px 24px;
+        }
+        .hero-title {
+            font-size: 22px;
+            line-height: 28px;
+            letter-spacing: -0.26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .hero-sub {
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #6e6e73;
+            margin-bottom: 22px;
+        }
+        .segment {
+            background: #dedfe3;
+            border-radius: 999px;
+            padding: 4px;
+            display: flex;
+            margin-bottom: 24px;
+        }
+        .segment button {
+            flex: 1;
+            height: 56px;
+            border: none;
+            border-radius: 999px;
+            background: transparent;
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+            color: #1d1d1f;
+            cursor: pointer;
+        }
+        .segment .active {
+            background: #ffffff;
+            font-weight: 590;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+        .lender-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 26px;
+        }
+        .logo-box {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            border: 1px solid #d0d1d7;
+            background: #f5f5f7;
+            display: grid;
+            place-items: center;
+            padding: 12px;
+            overflow: hidden;
+        }
+        .logo-box img { width: 100%; height: auto; display: block; }
+        .lender-name { font-size: 17px; line-height: 22px; letter-spacing: -0.43px; font-weight: 590; }
+        .lender-sub { font-size: 15px; line-height: 20px; letter-spacing: -0.23px; color: #86868b; margin-top: 4px; }
+        .section-label {
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0;
+            color: #86868b;
+            margin: 18px 0 10px;
+            text-transform: uppercase;
+        }
+        .plan-card {
+            border: 1px solid #8f8f96;
+            border-radius: 24px;
+            background: #efefef;
+            padding: 18px;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        .plan-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .plan-title {
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+            font-weight: 590;
+            margin-bottom: 8px;
+        }
+        .plan-text {
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #6e6e73;
+            max-width: 180px;
+        }
+        .price {
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+            font-weight: 700;
+            white-space: nowrap;
+            margin-top: 8px;
+        }
+        .plan-foot {
+            margin-top: 24px;
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #6e6e73;
+        }
+        .plan-foot a { color: #0a84ff; text-decoration: none; }
+        .empty-state {
+            display: none;
+            padding: 40px 0;
+            text-align: center;
+            color: #6e6e73;
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+        }
+        .apple-badge {
+            position: absolute;
+            left: 50%;
+            bottom: 46px;
+            transform: translateX(-50%);
+        }
+        .apple-pill {
+            background: #f5f5f7;
+            padding: 8px 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            color: #1d1d1f;
+            box-shadow: 0 2px 40px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 460px) {
+            body { padding: 0; background: #efefef; }
+            .mobile-screen { border-radius: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-screen">
+        <div class="header">
+            <div class="header-row">
+                <div class="header-left">
+                    <div class="back" onclick="window.location.href='/offer-list'"></div>
+                <div class="title-wrap">
+                        <div class="title">Apple Finance</div>
+                        <div class="cart">Cart Total : <strong>Rs61,998</strong></div>
+                    </div>
+                </div>
+                <div class="items">2 Items</div>
+            </div>
+            <div class="step">Step 1/3</div>
+            <div class="progress"><span></span></div>
+        </div>
+        <main class="main">
+            <div class="hero-title">Choose Plan</div>
+            <div class="hero-sub">Pick the plan that works best.</div>
+
+            <div class="segment">
+                <button id="plansTab" class="active" type="button">Plans</button>
+                <button id="otherLendersTab" type="button">Other Lenders</button>
+            </div>
+
+            <div id="plansView">
+                <div class="lender-row">
+                    <div class="logo-box">
+                        <img id="lenderLogo" src="/images/JP_TVS Credit-Lender.png" alt="TVS Credit">
+                    </div>
+                    <div>
+                        <div id="lenderName" class="lender-name">TVS Credit</div>
+                        <div id="lenderSub" class="lender-sub">EMI starts @ Rs7,416 per month</div>
+                    </div>
+                </div>
+
+                <div class="section-label">Without Interest</div>
+                <div class="plan-card" onclick="openPlan('3-month')">
+                    <div class="plan-head">
+                        <div>
+                            <div class="plan-title">3 Installments</div>
+                            <div class="plan-text">Includes one-time downpayment of Rs 5,000</div>
+                        </div>
+                        <div class="price">Rs19,422/mo</div>
+                    </div>
+                    <div class="plan-foot">Plan breakdown includes <a href="#">2 items</a></div>
+                </div>
+
+                <div class="section-label">With Interest</div>
+                <div class="plan-card" onclick="openPlan('6-month')">
+                    <div class="plan-head">
+                        <div>
+                            <div class="plan-title">6 Installments</div>
+                            <div class="plan-text">No Downpayment Required</div>
+                            <div class="plan-text" style="margin-top: 4px;">Interest = Rs215</div>
+                        </div>
+                        <div class="price">Rs10,740/mo</div>
+                    </div>
+                    <div class="plan-foot">Plan breakdown includes <a href="#">2 items</a></div>
+                </div>
+
+                <div class="plan-card" style="margin-bottom: 90px;" onclick="openPlan('9-month')">
+                    <div class="plan-head">
+                        <div>
+                            <div class="plan-title">9 Installments</div>
+                            <div class="plan-text">No Downpayment Required</div>
+                            <div class="plan-text" style="margin-top: 4px;">Interest = Rs500</div>
+                        </div>
+                        <div class="price">Rs7,416/mo</div>
+                    </div>
+                    <div class="plan-foot">Plan breakdown includes <a href="#">2 items</a></div>
+                </div>
+            </div>
+            <div id="emptyState" class="empty-state">No more lenders</div>
+        </main>
+        <div class="apple-badge"><span class="apple-pill">apple.com</span></div>
+    </div>
+    <script>
+        const plansTab = document.getElementById('plansTab');
+        const otherLendersTab = document.getElementById('otherLendersTab');
+        const plansView = document.getElementById('plansView');
+        const emptyState = document.getElementById('emptyState');
+        const selectedLender = sessionStorage.getItem('selectedLender');
+        if (selectedLender === 'dmi') {
+            document.getElementById('lenderLogo').src = '/images/JP_DMI-Lender.png';
+            document.getElementById('lenderLogo').alt = 'DMI Finance';
+            document.getElementById('lenderName').textContent = 'DMI Finance';
+            document.getElementById('lenderSub').textContent = 'EMI starts @ Rs2,935 per month';
+        }
+
+        function showPlans() {
+            plansTab.classList.add('active');
+            otherLendersTab.classList.remove('active');
+            plansView.style.display = 'block';
+            emptyState.style.display = 'none';
+        }
+
+        function showOtherLenders() {
+            otherLendersTab.classList.add('active');
+            plansTab.classList.remove('active');
+            plansView.style.display = 'none';
+            emptyState.style.display = 'block';
+        }
+
+        function openPlan(planId) {
+            sessionStorage.setItem('selectedPlan', planId);
+            window.location.href = '/plan-summary';
+        }
+
+        plansTab.addEventListener('click', showPlans);
+        otherLendersTab.addEventListener('click', showOtherLenders);
+    </script>
+</body>
+</html>

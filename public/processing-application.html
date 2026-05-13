@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apple Finance - Processing Application</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #e9ebf0;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            color: #1d1d1f;
+        }
+        .mobile-screen {
+            width: 402px;
+            height: 800px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+        .center-stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .loader {
+            width: 50px;
+            aspect-ratio: 1;
+            display: grid;
+            border-radius: 50%;
+            margin: 0 auto 18px;
+            background:
+                linear-gradient(0deg, rgb(0 0 0 / 50%) 30%, #0000 0 70%, rgb(0 0 0 / 100%) 0) 50%/8% 100%,
+                linear-gradient(90deg, rgb(0 0 0 / 25%) 30%, #0000 0 70%, rgb(0 0 0 / 75%) 0) 50%/100% 8%;
+            background-repeat: no-repeat;
+            animation: l23 1s infinite steps(12);
+        }
+        .loader::before,
+        .loader::after {
+            content: "";
+            grid-area: 1 / 1;
+            border-radius: 50%;
+            background: inherit;
+            opacity: 0.915;
+            transform: rotate(30deg);
+        }
+        .loader::after {
+            opacity: 0.83;
+            transform: rotate(60deg);
+        }
+        @keyframes l23 {
+            100% { transform: rotate(1turn); }
+        }
+        .title {
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+        }
+        .bottom-panel {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 24px;
+        }
+        .timer {
+            font-size: 16px;
+            line-height: 21px;
+            letter-spacing: -0.31px;
+            font-weight: 590;
+        }
+        .subtitle {
+            font-size: 15px;
+            line-height: 20px;
+            letter-spacing: -0.23px;
+            color: #8e8e93;
+        }
+        .brand {
+            display: flex;
+            justify-content: center;
+            margin-top: 18px;
+        }
+        .brand img {
+            width: 280px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .apple-badge {
+            display: flex;
+            justify-content: center;
+            padding: 0 0 24px;
+        }
+        .apple-pill {
+            background: #f5f5f7;
+            padding: 8px 20px;
+            border-radius: 16px;
+            font-size: 15px;
+            color: #1d1d1f;
+            box-shadow: 0 2px 40px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 460px) {
+            body { padding: 0; background: #ffffff; }
+            .mobile-screen { border-radius: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-screen">
+        <div class="content">
+            <div class="center-stage">
+                <div class="loader"></div>
+                <div class="title">Processing your application</div>
+            </div>
+            <div class="bottom-panel">
+                <div class="timer" id="timer">0:10</div>
+                <div class="subtitle">Please don't close this window</div>
+                <div class="brand">
+                    <img src="/images/Juspay-Branding.png" alt="secured by Juspay">
+                </div>
+            </div>
+        </div>
+        <div class="apple-badge"><span class="apple-pill">apple.com</span></div>
+    </div>
+    <script>
+        const timerEl = document.getElementById('timer');
+        const params = new URLSearchParams(window.location.search);
+        const nextRoute = params.get('next') || '/approval-success';
+        let remaining = 10;
+        timerEl.textContent = '0:10';
+        const timer = setInterval(() => {
+            remaining -= 1;
+            timerEl.textContent = `0:${String(Math.max(remaining, 0)).padStart(2, '0')}`;
+            if (remaining <= 0) {
+                clearInterval(timer);
+                window.location.href = nextRoute;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
